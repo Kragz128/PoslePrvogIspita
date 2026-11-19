@@ -1,122 +1,68 @@
-package aaaaa;
-
-import java.util.ArrayList;
+package aaaa;
 
 public class IspitniTermin {
-	public String nazivPredmeta;
-	public String sifraTermina;
-	public String datumVremeTermina;
-	public String oznakaSale;
-	public int brojPrijavljenihStudenata;
-	
-	
-	
+    private String nazivPredmeta;
+    private String sifraTermina;
+    private String datum;
+    private String oznakaSale;
+    private int brojPrijavljenihStudenata;
 
-	@Override
-	public String toString() {
-		return "IspitniTermin [nazivPredmeta=" + nazivPredmeta + ", sifraTermina=" + sifraTermina
-				+ ", datumVremeTermina=" + datumVremeTermina + ", oznakaSale=" + oznakaSale
-				+ ", brojPrijavljenihStudenata=" + brojPrijavljenihStudenata + "]";
-	}
+    public IspitniTermin(String nazivPredmeta, String sifraTermina,
+                         String datum, String oznakaSale,
+                         int brojPrijavljenihStudenata) {
+        this.nazivPredmeta = nazivPredmeta;
+        this.sifraTermina = sifraTermina;
+        this.datum = datum;
+        this.oznakaSale = oznakaSale;
+        this.brojPrijavljenihStudenata = brojPrijavljenihStudenata;
+    }
 
+    public String getNazivPredmeta() {
+        return nazivPredmeta;
+    }
 
+    public String getSifraTermina() {
+        return sifraTermina;
+    }
 
+    public String getDatum() {
+        return datum;
+    }
 
-	public IspitniTermin(String nazivPredmeta, String sifraTermina, String datumVremeTermina, String oznakaSale,
-			int brojPrijavljenihStudenata) {
-		super();
-		this.nazivPredmeta = nazivPredmeta;
-		this.sifraTermina = sifraTermina;
-		this.datumVremeTermina = datumVremeTermina;
-		this.oznakaSale = oznakaSale;
-		this.brojPrijavljenihStudenata = brojPrijavljenihStudenata;
-	}
+    public String getOznakaSale() {
+        return oznakaSale;
+    }
 
+    public int getBrojPrijavljenihStudenata() {
+        return brojPrijavljenihStudenata;
+    }
 
+    public void setNazivPredmeta(String nazivPredmeta) {
+        this.nazivPredmeta = nazivPredmeta;
+    }
 
+    public void setSifraTermina(String sifraTermina) {
+        this.sifraTermina = sifraTermina;
+    }
 
-	public String getNazivPredmeta() {
-		return nazivPredmeta;
-	}
+    public void setDatum(String datum) {
+        this.datum = datum;
+    }
 
+    public void setOznakaSale(String oznakaSale) {
+        this.oznakaSale = oznakaSale;
+    }
 
+    public void setBrojPrijavljenihStudenata(int broj) {
+        this.brojPrijavljenihStudenata = broj;
+    }
 
-
-	public void setNazivPredmeta(String nazivPredmeta) {
-		this.nazivPredmeta = nazivPredmeta;
-	}
-
-
-
-
-	public String getSifraTermina() {
-		return sifraTermina;
-	}
-
-
-
-
-	public void setSifraTermina(String sifraTermina) {
-		this.sifraTermina = sifraTermina;
-	}
-
-
-
-
-	public String getDatumVremeTermina() {
-		return datumVremeTermina;
-	}
-
-
-
-
-	public void setDatumVremeTermina(String datumVremeTermina) {
-		this.datumVremeTermina = datumVremeTermina;
-	}
-
-
-
-
-	public String getOznakaSale() {
-		return oznakaSale;
-	}
-
-
-
-
-	public void setOznakaSale(String oznakaSale) {
-		this.oznakaSale = oznakaSale;
-	}
-
-
-
-
-	public int getBrojPrijavljenihStudenata() {
-		return brojPrijavljenihStudenata;
-	}
-
-
-
-
-	public void setBrojPrijavljenihStudenata(int brojPrijavljenihStudenata) {
-		this.brojPrijavljenihStudenata = brojPrijavljenihStudenata;
-	}
-
-	public static String nadjiSalu(ArrayList<IspitniTermin> termini, String sifraTermina) {
-		for (IspitniTermin termin : termini) {
-			if (termin.getSifraTermina().equals(sifraTermina)) {
-				return termin.getOznakaSale();
-			}
-		}
-		return null; 
-	}
-	
-	public static int nadjiBrojPrijavljenihStudenata(ArrayList<IspitniTermin> termini, String sifraTermina) {
-		for (IspitniTermin termin : termini) {
-			if (termin.getSifraTermina().equals(sifraTermina)) {
-				return termin.getBrojPrijavljenihStudenata();
-			}
-		}
-		return -1;
-	}
+    @Override
+    public String toString() {
+        return "Predmet: " + nazivPredmeta
+                + ", šifra: " + sifraTermina
+                + ", datum: " + datum
+                + ", sala: " + oznakaSale
+                + ", prijavljenih: " + brojPrijavljenihStudenata;
+    }
 }
