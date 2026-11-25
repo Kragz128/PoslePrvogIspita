@@ -1,173 +1,177 @@
-package vezba2;
+package mrnjaooo;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
-public class Prozor extends JFrame {
+public class Prozor extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel contentPane;
-    private JTextField textField;      
-    private JTextField textField_1;     
-    private JTextField textField_2; 
-    private JTextField textField_3;     
+    private JTextField polje1 = new JTextField("0");
+    private JTextField polje2 = new JTextField("0");
+    private JTextField polje3 = new JTextField("0");
+    private JTextField polje4 = new JTextField("0");
+    private JTextField poljeRezultat = new JTextField("0");
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Prozor frame = new Prozor();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+    private JLabel lblOperacija = new JLabel("+");
+
+    private JCheckBox cbSaberi = new JCheckBox("Saberi");
+    private JCheckBox cbOduzmi = new JCheckBox("Oduzmi");
+    private JCheckBox cbPomnozi = new JCheckBox("Pomnozi");
+    private JCheckBox cbPodeli = new JCheckBox("Podeli");
 
     public Prozor() {
-        setTitle("Konverter valuta");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 200);
+        setLayout(null);
+        setPreferredSize(new Dimension(565, 360));
 
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        JLabel naslov = new JLabel("Kalkulator");
+        naslov.setBounds(260, 15, 100, 25);
+        add(naslov);
 
-        JLabel lblEur = new JLabel("EUR:");
-        lblEur.setBounds(10, 26, 40, 20);
-        contentPane.add(lblEur);
+        polje1.setBounds(110, 50, 38, 24);
+        polje2.setBounds(202, 50, 38, 24);
+        polje3.setBounds(298, 50, 38, 24);
+        polje4.setBounds(386, 50, 38, 24);
 
-        JLabel lblUsd = new JLabel("USD:");
-        lblUsd.setBounds(10, 48, 40, 20);
-        contentPane.add(lblUsd);
+        add(polje1);
+        add(polje2);
+        add(polje3);
+        add(polje4);
 
-        JLabel lblRsd = new JLabel("RSD:");
-        lblRsd.setBounds(10, 70, 40, 20);
-        contentPane.add(lblRsd);
+        JLabel deljenje1 = new JLabel("/");
+        deljenje1.setBounds(174, 50, 15, 24);
+        add(deljenje1);
 
-        textField = new JTextField();
-        textField.setBounds(50, 25, 90, 20);
-        contentPane.add(textField);
+        lblOperacija.setBounds(266, 50, 15, 24);
+        add(lblOperacija);
 
-        textField_1 = new JTextField();
-        textField_1.setBounds(50, 48, 90, 20);
-        contentPane.add(textField_1);
+        JLabel deljenje2 = new JLabel("/");
+        deljenje2.setBounds(357, 50, 15, 24);
+        add(deljenje2);
 
-        textField_2 = new JTextField();
-        textField_2.setBounds(50, 71, 90, 20);
-        contentPane.add(textField_2);
+        cbSaberi.setBounds(35, 105, 120, 25);
+        cbOduzmi.setBounds(35, 150, 120, 25);
+        cbPomnozi.setBounds(35, 195, 120, 25);
+        cbPodeli.setBounds(35, 240, 120, 25);
 
-        textField_3 = new JTextField();
-        textField_3.setEditable(false);
-        textField_3.setBounds(165, 25, 250, 65);
-        contentPane.add(textField_3);
+        add(cbSaberi);
+        add(cbOduzmi);
+        add(cbPomnozi);
+        add(cbPodeli);
+
+        cbSaberi.addActionListener(e -> izaberiOperaciju(cbSaberi, "+"));
+        cbOduzmi.addActionListener(e -> izaberiOperaciju(cbOduzmi, "-"));
+        cbPomnozi.addActionListener(e -> izaberiOperaciju(cbPomnozi, "*"));
+        cbPodeli.addActionListener(e -> izaberiOperaciju(cbPodeli, "/"));
 
         JButton btnIzracunaj = new JButton("Izračunaj");
-        btnIzracunaj.setBounds(50, 110, 100, 25);
+        btnIzracunaj.setBounds(310, 105, 120, 35);
         btnIzracunaj.addActionListener(e -> izracunaj());
-        contentPane.add(btnIzracunaj);
+        add(btnIzracunaj);
 
-        JButton btnNoviUnos = new JButton("Novi unos");
-        btnNoviUnos.setBounds(165, 110, 100, 25);
-        btnNoviUnos.addActionListener(e -> ocistiPolja());
-        contentPane.add(btnNoviUnos);
+        JButton btnZatvori = new JButton("Zatvori");
+        btnZatvori.setBounds(310, 155, 120, 35);
+        btnZatvori.addActionListener(e -> System.exit(0));
+        add(btnZatvori);
+
+        JButton btnObrisi = new JButton("Obriši");
+        btnObrisi.setBounds(310, 205, 120, 35);
+        btnObrisi.addActionListener(e -> obrisi());
+        add(btnObrisi);
+
+        JLabel lblRezultat = new JLabel("Rezultat:");
+        lblRezultat.setBounds(180, 270, 75, 25);
+        add(lblRezultat);
+
+        poljeRezultat.setEditable(false);
+        poljeRezultat.setBounds(255, 270, 120, 25);
+        add(poljeRezultat);
+
+        cbSaberi.setSelected(true);
+    }
+
+    private void izaberiOperaciju(JCheckBox izabrani, String znak) {
+        cbSaberi.setSelected(izabrani == cbSaberi);
+        cbOduzmi.setSelected(izabrani == cbOduzmi);
+        cbPomnozi.setSelected(izabrani == cbPomnozi);
+        cbPodeli.setSelected(izabrani == cbPodeli);
+
+        lblOperacija.setText(znak);
     }
 
     private void izracunaj() {
-        String eurUnos = textField.getText().trim();
-        String usdUnos = textField_1.getText().trim();
-        String rsdUnos = textField_2.getText().trim();
-
-        int brojUnosa = 0;
-        if (!eurUnos.isEmpty()) brojUnosa++;
-        if (!usdUnos.isEmpty()) brojUnosa++;
-        if (!rsdUnos.isEmpty()) brojUnosa++;
-
-        if (brojUnosa != 1) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Unesi iznos samo u jedno polje: EUR, USD ili RSD."
-            );
-            return;
-        }
-
         try {
-            double eur;
+            double broj1 = procitajBroj(polje1);
+            double broj2 = procitajBroj(polje2);
+            double broj3 = procitajBroj(polje3);
+            double broj4 = procitajBroj(polje4);
 
-            if (!eurUnos.isEmpty()) {
-                eur = procitajIznos(eurUnos);
-            } else if (!usdUnos.isEmpty()) {
-                eur = procitajIznos(usdUnos) / 1.09;
-            } else {
-                eur = procitajIznos(rsdUnos) / 117.0;
+            if (broj2 == 0 || broj4 == 0) {
+                JOptionPane.showMessageDialog(this, "Ne može se deliti nulom.");
+                return;
             }
 
-            double usd = eur * 1.09;
-            double rsd = eur * 117.0;
+            double levaStrana = broj1 / broj2;
+            double desnaStrana = broj3 / broj4;
+            double rezultat;
 
-            textField.setText(String.format(Locale.US, "%.2f", eur));
-            textField_1.setText(String.format(Locale.US, "%.2f", usd));
-            textField_2.setText(String.format(Locale.US, "%.2f", rsd));
+            if (cbSaberi.isSelected()) {
+                rezultat = levaStrana + desnaStrana;
+            } else if (cbOduzmi.isSelected()) {
+                rezultat = levaStrana - desnaStrana;
+            } else if (cbPomnozi.isSelected()) {
+                rezultat = levaStrana * desnaStrana;
+            } else {
+                if (desnaStrana == 0) {
+                    JOptionPane.showMessageDialog(this, "Ne može se deliti nulom.");
+                    return;
+                }
+                rezultat = levaStrana / desnaStrana;
+            }
 
-            textField_3.setText(String.format(
-                    Locale.US,
-                    "EUR: %.2f | USD: %.2f | RSD: %.2f",
-                    eur, usd, rsd
-            ));
-
-            String json = String.format(
-                    Locale.US,
-                    "{\n  \"eur\": %.2f,\n  \"usd\": %.2f,\n  \"rsd\": %.2f\n}",
-                    eur, usd, rsd
-            );
-
-            Files.write(
-                    Paths.get("konverzija.json"),
-                    json.getBytes(StandardCharsets.UTF_8)
-            );
+            poljeRezultat.setText(String.format(Locale.US, "%.2f", rezultat));
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Unesi ispravan nenegativan iznos."
-            );
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Greška pri čuvanju JSON fajla: " + e.getMessage()
-            );
+            JOptionPane.showMessageDialog(this, "Unesi ispravne brojeve u sva četiri polja.");
         }
     }
 
-    private double procitajIznos(String tekst) {
-        double iznos = Double.parseDouble(tekst.replace(',', '.'));
-
-        if (iznos < 0 || Double.isNaN(iznos) || Double.isInfinite(iznos)) {
-            throw new NumberFormatException();
-        }
-
-        return iznos;
+    private double procitajBroj(JTextField polje) {
+        return Double.parseDouble(polje.getText().trim().replace(',', '.'));
     }
 
-    private void ocistiPolja() {
-        textField.setText("");
-        textField_1.setText("");
-        textField_2.setText("");
-        textField_3.setText("");
+    private void obrisi() {
+        polje1.setText("0");
+        polje2.setText("0");
+        polje3.setText("0");
+        polje4.setText("0");
+        poljeRezultat.setText("0");
+
+        cbSaberi.setSelected(true);
+        cbOduzmi.setSelected(false);
+        cbPomnozi.setSelected(false);
+        cbPodeli.setSelected(false);
+
+        lblOperacija.setText("+");
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            JFrame prozor = new JFrame("Kalkulator");
+            prozor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            prozor.setContentPane(new Prozor());
+            prozor.pack();
+            prozor.setLocationRelativeTo(null);
+            prozor.setVisible(true);
+        });
     }
 }
